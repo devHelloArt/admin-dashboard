@@ -101,7 +101,7 @@ def load_client():
         user = Client();
         user.id = item["id"]
         user.name = item["name"]
-        user.phonenumer = item["phonenumer"]
+        user.phonenumer = item["phonenum"]
         user.email = item["email"]
         user.wallet_address = item["wallet_address"]
         user.balance = item["balance"]
