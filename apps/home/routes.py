@@ -8,13 +8,14 @@ from apps.home import blueprint
 from flask import render_template, request
 from flask_login import login_required
 from jinja2 import TemplateNotFound
+from decouple import config
 import requests
 
 class Client(object):
     def __init__(self):        
         self.id = 0
         self.name = ""
-        self.phonenumer = ""
+        self.phonenum = ""
         self.email = ""
         self.wallet_address = ""
         self.balance = 0
@@ -63,7 +64,9 @@ def popupTokenTransfer():
 
 @blueprint.route('/popupTokenTransferAll')
 def popupTokenTransferAll():
-    return render_template("popup/popup-token-transferall.html", segment=popupTokenTransferAll)
+    isDebug = config('DEBUG', default=True, cast=bool)
+    API_BASE_URL = 'https://app.dev.htt-wallet.io' if isDebug  else 'https://app.htt-wallet.io'
+    return render_template("popup/popup-token-transferall.html", segment=popupTokenTransferAll,  api_base_url=API_BASE_URL)
 
 @blueprint.route('/popupTokenRevertAll')
 def popupTokenRevertAll():
@@ -93,15 +96,19 @@ def get_segment(request):
         return None
 
 def load_client():
-    res = requests.get('https://app.htt-wallet.io/users/getuser')
-
+    isDebug = config('DEBUG', default=True, cast=bool)
+    API_BASE_URL = 'https://app.htt-wallet.io' if isDebug  else 'https://app.htt-wallet.io'
+    
+    print ("API Url : " + API_BASE_URL + '/user/getuser')
+    
+    res = requests.get(API_BASE_URL + '/users/getuser')
     users = [];
 
     for item in res.json()['users']:
         user = Client();
         user.id = item["id"]
         user.name = item["name"]
-        user.phonenumer = item["phonenum"]
+        user.phonenum = item["phonenum"]
         user.email = item["email"]
         user.wallet_address = item["wallet_address"]
         user.balance = item["balance"]
