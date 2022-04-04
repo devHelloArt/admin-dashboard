@@ -30,7 +30,7 @@ jobs:
       uses: docker/metadata-action@v3
       with:
         images: |
-          devrndx/ms-rndx-admin
+          devhtt/ms-htt-admin
         flavor: |
           latest=false
           prefix=nightly_
