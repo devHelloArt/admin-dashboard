@@ -99,7 +99,7 @@ def get_segment(request):
 
 def load_client():
     isDebug = config('DEBUG', default=True, cast=bool)
-    API_BASE_URL = 'https://app.htt-wallet.io' if isDebug  else 'https://app.htt-wallet.io'
+    API_BASE_URL = 'https://app.dev.htt-wallet.io' if isDebug  else 'https://app.htt-wallet.io'
     
     print ("API Url : " + API_BASE_URL + '/user/getuser')
     
