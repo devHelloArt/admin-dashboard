@@ -59,8 +59,13 @@ def ping():
 
 @blueprint.route('/popupTokenTransfer')
 def popupTokenTransfer():
+    isDebug = config('DEBUG', default=True, cast=bool)
+    API_BASE_URL = 'https://app.htt-wallet.io' if isDebug  else 'https://app.htt-wallet.io'
+    
     walletAddr = request.args.get('walletAddr')
-    return render_template("popup/popup-token-transfer.html", segment=popupTokenTransfer, addr=walletAddr)
+    name = request.args.get('name')
+    phoneNum = request.args.get('phoneNum')
+    return render_template("popup/popup-token-transfer.html", segment=popupTokenTransfer, addr=walletAddr, name=name, phoneNum=phoneNum, api_base_url=API_BASE_URL)
 
 @blueprint.route('/popupTokenTransferAll')
 def popupTokenTransferAll():
